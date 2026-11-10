@@ -1,0 +1,17 @@
+tools/model_weight/
+.venv/
+runtime/
+models/
+data/demo/
+__pycache__/
+.pytest_cache/
+.env
+
+# Local dependencies and generated runtime files
+node_modules/
+logs/
+outputs/
+uploads/
+*.py[cod]
+.env.*
+!.env.example

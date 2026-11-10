@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Medical Agent</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <dialog id="loginDialog"><form id="loginForm">
+      <h2>Medical Agent 登录</h2><p>首次使用请注册，病例与任务按账号独立保存。</p>
+      <label>用户名<input id="username" autocomplete="username" pattern="[a-zA-Z0-9_-]{3,40}" required /></label>
+      <label>密码（至少 10 位）<input id="password" type="password" autocomplete="current-password" minlength="10" required /></label>
+      <p id="loginError" role="alert"></p><button type="submit" value="login">登录</button><button type="submit" value="register">注册</button>
+    </form></dialog>
+    <dialog id="tasksDialog"><h2>任务记录</h2><div id="taskList"></div><form method="dialog"><button>关闭</button></form></dialog>
+    <div class="app-shell" id="appShell">
+      <aside class="sidebar" id="sidebar" aria-label="会话侧栏">
+        <div class="sidebar-top">
+          <div class="brand-block">
+            <div class="brand-mark">M</div>
+            <div>
+              <strong>Medical Agent</strong>
+              <span>影像智能助手</span>
+            </div>
+          </div>
+          <button class="icon-button sidebar-close" id="sidebarCloseBtn" type="button" title="关闭侧栏" aria-label="关闭侧栏">
+            <span data-lucide="panel-left-close"></span>
+          </button>
+        </div>
+
+        <button class="new-chat-button" id="newSessionBtn" type="button">
+          <span data-lucide="square-pen"></span>
+          <span>新对话</span>
+        </button>
+
+        <label class="history-search">
+          <span data-lucide="search"></span>
+          <input id="historySearch" type="search" placeholder="搜索对话" autocomplete="off" />
+        </label>
+
+        <div class="history-heading">
+          <span>历史对话</span>
+          <button class="icon-button" id="clearHistoryBtn" type="button" title="清空历史记录" aria-label="清空历史记录">
+            <span data-lucide="trash-2"></span>
+          </button>
+        </div>
+        <nav class="history-list" id="historyList" aria-label="历史对话列表"></nav>
+
+        <div class="sidebar-footer">
+          <button id="demoBtn" type="button">运行公开 CT Demo</button>
+          <button id="tasksBtn" type="button">任务记录 / 重试</button>
+          <button id="logoutBtn" type="button">退出登录</button>
+          <details class="server-settings" id="serverSettings">
+            <summary>
+              <span class="connection-dot" id="connectionDot"></span>
+              <span class="server-summary">
+                <strong>Supervisor</strong>
+                <small id="connectionState">等待连接</small>
+              </span>
+              <span data-lucide="chevrons-up-down"></span>
+            </summary>
+            <div class="settings-body">
+              <label for="apiBase">后端服务地址</label>
+              <div class="api-field">
+                <span data-lucide="server"></span>
+                <input id="apiBase" type="url" value="http://127.0.0.1:8000" spellcheck="false" />
+              </div>
+            </div>
+          </details>
+        </div>
+      </aside>
+
+      <button class="sidebar-backdrop" id="sidebarBackdrop" type="button" aria-label="关闭侧栏"></button>
+
+      <main class="chat-shell">
+        <header class="chat-header">
+          <button class="icon-button sidebar-toggle" id="sidebarToggleBtn" type="button" title="打开侧栏" aria-label="打开侧栏">
+            <span data-lucide="panel-left"></span>
+          </button>
+          <div class="chat-heading">
+            <strong id="currentSessionTitle">新对话</strong>
+            <span>Medical Agent</span>
+          </div>
+          <div class="model-badge">
+            <span></span>
+            Supervisor
+          </div>
+        </header>
+
+        <section class="conversation" id="conversation" aria-live="polite"></section>
+
+        <footer class="composer-wrap">
+          <div class="pending-attachment" id="pendingAttachment" hidden></div>
+          <button id="cancelTaskBtn" type="button" hidden>取消当前任务</button>
+          <form class="composer" id="composer">
+            <input id="fileInput" type="file" accept=".nii,.gz,.jpg,.jpeg,.png,.jfif,.webp,.bmp" hidden />
+            <button class="round-button" id="attachBtn" type="button" title="上传图片或文件" aria-label="上传图片或文件">
+              <span data-lucide="plus" aria-hidden="true">+</span>
+            </button>
+            <textarea
+              id="queryInput"
+              rows="1"
+              placeholder="给 Medical Agent 发送消息"
+            ></textarea>
+            <button class="send-button" id="sendBtn" type="submit" title="发送消息" aria-label="发送消息">
+              <span data-lucide="arrow-up" aria-hidden="true">↑</span>
+            </button>
+          </form>
+          <div class="composer-hint">
+            <span>回答仅供辅助分析，请结合专业判断</span>
+            <span id="sessionLabel"></span>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script src="./node_modules/lucide/dist/umd/lucide.min.js"></script>
+    <script src="./node_modules/marked/lib/marked.umd.js"></script>
+    <script src="./clinical.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

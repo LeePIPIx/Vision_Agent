@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "lucide": "^0.468.0",
+    "marked": "^15.0.12"
+  }
+}

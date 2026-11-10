@@ -1,0 +1,15 @@
+fastapi
+uvicorn
+python-multipart
+langgraph
+langchain-core
+openai
+pydantic
+nibabel
+numpy
+pillow
+ultralytics
+tavily-python
+laya==0.3.5
+scipy
+langgraph-checkpoint-sqlite
